@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Login · Phishing Portal{% endblock %}
+{% block content %}
+<div class="card">
+  <h2 style="margin-top:0;">Login</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div style="margin-bottom:12px;">
+      <label>Username</label><br>
+      {{ form.username }}
+    </div>
+    <div style="margin-bottom:12px;">
+      <label>Password</label><br>
+      {{ form.password }}
+    </div>
+    <button class="btn-primary" type="submit">Sign in</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Phishing Portal{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'css/colors.css' %}" rel="stylesheet">
+</head>
+<body>
+  <div class="navbar">
+    <div><strong>Phishing Portal</strong></div>
+    <div>
+      {% if request.user.is_authenticated %}
+        <span>Hi, {{ request.user.first_name|default:request.user.username }}</span>
+        <a href="{% url 'dashboard:home' %}" style="margin-left:12px;">Dashboard</a>
+        <form action="{% url 'accounts:logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button class="btn-light" style="background:transparent;border:none;padding:0;color:#fff;cursor:pointer;">Logout</button>
+  </form>
+      {% else %}
+        <a href="{% url 'accounts:login' %}">Login</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

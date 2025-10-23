@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }}{% endblock %}
+{% block content %}
+<div class="card" style="background:#4f8cad;color:#fff;">
+<h2>{{ page.title }}</h2>
+<div style="background:#83afc6;padding:1em;border-radius:10px;color:#1a1a1a;">
+{{ page.content_html|safe }}
+</div>
+<form method="post" onsubmit="return sendReport(event)">
+{% csrf_token %}
+<button>Report this email</button>
+</form>
+</div>
+<script>
+function sendReport(e){e.preventDefault();
+const t=new URLSearchParams(location.search).get('t');
+fetch(`/t/report/${t}/`,{method:'POST',headers:{'X-CSRFToken':'{{ csrf_token }}'}})
+.then(r=>r.text()).then(alert).catch(()=>alert('Error reporting.'));
+}
+</script>
+{% endblock %}
